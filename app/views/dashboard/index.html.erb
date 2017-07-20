@@ -4,7 +4,7 @@
       <div class="card">
         <div class="card-header">
           <h2 class="card-title">Timeline</h2>
-          <div class="card-subtitle">Tout les projets</div>
+          <div class="card-subtitle">All projects</div>
         </div>
 
         <div class="card-body">
@@ -18,18 +18,18 @@
         <div class="card-header">
           <%= link_to new_project_path, class: 'btn btn-primary float-right' do %>
             <i class="fa fa-plus"></i>
-            Créer un projet
+            New project
           <% end %>
 
-          <h2 class="card-title">Projets (<%= current_user.projects.count %>)</h2>
-          <div class="card-subtitle">Vos projets</div>
+          <h2 class="card-title">Projects (<%= current_user.projects.count %>)</h2>
+          <div class="card-subtitle">Your projects</div>
         </div>
 
         <div class="card-body">
           <table class="table">
             <thead>
               <tr>
-                <th>Nom</th>
+                <th>Name</th>
                 <th>Deadline</th>
               </tr>
               <% for project in @projects %>
