@@ -7,11 +7,11 @@
         <div class="card-header">
           <div class="btn-group float-right">
             <% if @task.closed %>
-              <%= link_to "Ré-ouvrir",
+              <%= link_to "Re-open",
                 reopen_task_path(@project.slug, @task.id),
                 method: :post, class: 'btn btn-primary' %>
             <% else %>
-              <%= link_to "Fermer",
+              <%= link_to "Close",
                 close_task_path(@project.slug, @task.id),
                 method: :post, class: 'btn btn-primary' %>
             <% end %>
@@ -19,22 +19,22 @@
             <%= link_to "Edit.",
               edit_task_path(@project.slug, @task.id), class: 'btn btn-default' %>
 
-            <%= link_to "Supp.",
+            <%= link_to "Destroy",
               delete_task_path(@project.slug, @task.id),
               method: :delete,
-              data: { confirm: "Voulez-vous vraiment supprimer cette tâche ?" },
+              data: { confirm: "Do you really want to destroy this task ?" },
               class: 'btn btn-default' %>
           </div>
 
           <h2 class="card-title text-bold">
             <% if @task.closed %>
-              [FERMÉE]
+              [CLOSED]
             <% end %>
             <%= @task.name %>
           </h2>
           <h2 class="card-subtitle">
-            Ouverte le <%= l @task.created_at, format: :long %>
-            par <%= @task.user.email %>
+            Opened at <%= l @task.created_at, format: :long %>
+            by <%= @task.user.email %>
           </h2>
         </div>
 
@@ -53,7 +53,7 @@
         <div class="card-body">
           <div class="tile">
             <div class="tile-content">
-              <p class="tile-title text-bold">Assignée à</p>
+              <p class="tile-title text-bold">Assigned to</p>
               <p class="tile-title"><%= @task.assigned.email %></p>
             </div>
           </div>
@@ -62,7 +62,7 @@
 
           <div class="tile">
             <div class="tile-content">
-              <p class="tile-title text-bold">Début</p>
+              <p class="tile-title text-bold">Start</p>
               <p class="tile-title"><%= l @task.start_date, format: :long %></p>
             </div>
           </div>

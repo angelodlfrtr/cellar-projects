@@ -5,13 +5,13 @@
     <div class="column col-2 col-xl-3">
       <div class="card">
         <div class="card-header">
-          <h4 class="card-title">Créer une nouvelle tâche</h4>
+          <h4 class="card-title">New task</h4>
         </div>
 
         <div class="card-body">
-          Créez une nouvelle tâche en entrant les informations demandées.
+          Create new task
           <br>
-          <%= link_to 'Retour à la liste des tâches', tasks_path(@project.slug) %>
+          <%= link_to 'Back to tasks', tasks_path(@project.slug) %>
         </div>
       </div>
     </div>
@@ -22,31 +22,31 @@
           <%= form_for(@task, url: create_task_path(@project.slug)) do |f| %>
 
             <div class="form-group">
-              <%= f.label :name, 'Titre de la tâche', class: 'form-label' %>
+              <%= f.label :name, class: 'form-label' %>
               <%= f.text_field :name, class: 'form-input', autofocus: true %>
             </div>
 
             <div class="form-group">
-              <%= f.label :description, 'Décrivez la tâche', class: 'form-label' %>
+              <%= f.label :description, 'Describe task', class: 'form-label' %>
               <%= f.text_area :description, class: 'form-input', rows: 5 %>
             </div>
 
             <div class="form-group">
-              <%= f.label :assigned_id, 'Assignée à', class: 'form-label' %>
+              <%= f.label :assigned_id, 'Assigned to', class: 'form-label' %>
               <%= f.select :assigned_id,
-                options_for_select(@project.users.map{ |c| [c.email, c.id] }),
+                options_for_select(@project.users.map{ |c| [c.username, c.id] }),
                 {}, class: 'form-select'
               %>
             </div>
 
             <div class="columns">
               <div class="column col-6">
-                <%= f.label :start_date, 'Début de la tâche', class: 'form-label' %>
+                <%= f.label :start_date, 'Start', class: 'form-label' %>
                 <%= f.datetime_select :start_date, class: 'form-input' %>
               </div>
 
               <div class="column col-6">
-                <%= f.label :end_date, 'Fin de la tâche', class: 'form-label' %>
+                <%= f.label :end_date, 'Deadline', class: 'form-label' %>
                 <%= f.datetime_select :end_date, class: 'form-input' %>
               </div>
             </div>
@@ -54,7 +54,7 @@
             <div class="divider"></div>
 
             <div class="form-group">
-              <%= f.submit 'Enregistrer la tâche', class: 'btn btn-primary' %>
+              <%= f.submit 'Save task', class: 'btn btn-primary' %>
             </div>
           <% end %>
         </div>

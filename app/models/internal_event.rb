@@ -70,7 +70,7 @@ class InternalEvent < ApplicationRecord
 
       r = [
         ActionController::Base.helpers.link_to(self.user.username, user_link),
-        'a fermé la tâche'
+        'closed task'
       ]
 
       if task.deleted
@@ -87,7 +87,7 @@ class InternalEvent < ApplicationRecord
 
       r = [
         ActionController::Base.helpers.link_to(self.user.username, user_link),
-        'a réouvert la tâche'
+        're-opened task'
       ]
 
       if task.deleted
@@ -104,7 +104,7 @@ class InternalEvent < ApplicationRecord
 
       r = [
         ActionController::Base.helpers.link_to(self.user.username, user_link),
-        'a supprimé la tâche'
+        'deleted task'
       ]
 
       if task.deleted
@@ -121,7 +121,7 @@ class InternalEvent < ApplicationRecord
 
       r = [
         ActionController::Base.helpers.link_to(self.user.username, user_link),
-        'a commenté la tâche'
+        'comment task'
       ]
 
       if comment.task.deleted

@@ -12,6 +12,12 @@
     </li>
   <% end %>
 
+  <% if params[:controller] == 'projects' && params[:action] == 'new' %>
+    <li class="breadcrumb-item">
+      <%= link_to 'New project', new_project_path %>
+    </li>
+  <% end %>
+
   <% if params[:controller] == 'tasks' && params[:action] == 'index' %>
     <li class="breadcrumb-item">
       <%= link_to @project.name, project_path(@project.slug) %>

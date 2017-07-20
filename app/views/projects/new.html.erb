@@ -3,12 +3,11 @@
     <div class="column col-2 col-xl-3 col-md-12 col-sm-12 col-xs-12">
       <div class="card">
         <div class="card-header">
-          <h4 class="card-title">Nouveau projet</h4>
+          <h4 class="card-title">New project</h4>
         </div>
 
         <div class="card-body">
-          Créez ici un nouveau projet. Vous pourrez y ajouter des utilisateurs,
-          tâches, documents, ... une fois crée.
+          Here, create a new project. You will can add users, tasks, documents once created.
         </div>
       </div>
     </div>
@@ -19,12 +18,12 @@
           <%= form_for @project do |f| %>
 
             <div class="form-group">
-              <%= f.label :name, 'Nom du projet', class: 'form-label' %>
+              <%= f.label :name, 'Project name', class: 'form-label' %>
               <%= f.text_field :name, class: 'form-input', autofocus: true %>
             </div>
 
             <div class="form-group">
-              <%= f.label :description, 'Description', class: 'form-label' %>
+              <%= f.label :description, 'Project description', class: 'form-label' %>
               <%= f.text_area :description, class: 'form-input', rows: 5 %>
             </div>
 
@@ -36,7 +35,7 @@
             <div class="divider"></div>
 
             <div class="form-group text-right">
-              <%= f.submit 'Créer le projet', class: 'btn btn-primary' %>
+              <%= f.submit 'Create project', class: 'btn btn-primary' %>
             </div>
           <% end %>
         </div>
