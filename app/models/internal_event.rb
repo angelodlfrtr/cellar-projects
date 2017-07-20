@@ -116,7 +116,9 @@ class InternalEvent < ApplicationRecord
       r.join(' ').html_safe
     when 'task_comment_creation'
       comment   = TaskComment.find(self.subject_id)
-      task_link = Rails.application.routes.url_helpers.task_url(self.project.slug, comment.task.id) + "/#comment_#{comment.id}"
+      task      = Task.unscoped { comment.task }
+
+      task_link = Rails.application.routes.url_helpers.task_url(self.project.slug, task.id) + "/#comment_#{comment.id}"
       user_link = Rails.application.routes.url_helpers.user_url(self.user.username)
 
       r = [
