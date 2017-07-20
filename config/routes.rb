@@ -83,4 +83,20 @@ Rails.application.routes.draw do
   get 'users/:username',
     to: 'users#show',
     as: :user
+
+  # ==========================================================================================================
+  # Settings =================================================================================================
+  # ==========================================================================================================
+
+  get 'projects/:slug/settings/members',
+    to: 'settings/members#index',
+    as: :settings_members
+
+  post 'projects/:slug/settings/members',
+    to: 'settings/members#add',
+    as: :add_member
+
+  delete 'projects/:slug/settings/members/:id',
+    to: 'settings/members#remove',
+    as: :remove_member
 end

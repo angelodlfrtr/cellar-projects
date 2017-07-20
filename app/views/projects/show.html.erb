@@ -1,6 +1,19 @@
 <%= render partial: 'partials/project_menu' %>
 
 <div class="container">
+
+  <% unless @project.description.blank? %>
+    <div class="columns">
+      <div class="column col-12">
+        <div class="card">
+          <div class="card-body">
+            <%= @project.description %>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+
   <div class="columns">
     <div class="column col-6 col-xs-6 col-md-12">
       <div class="card">
@@ -26,7 +39,7 @@
               <% for task in @project.tasks.where(assigned_id: current_user.id).opened %>
                 <tr>
                   <td><%= link_to task.name, task_path(@project.slug, task.id) %></td>
-                  <td><%= l task.end_date %></td>
+                  <td><%= l task.deadline %></td>
                 </tr>
               <% end %>
             </tbody>

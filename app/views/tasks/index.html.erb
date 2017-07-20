@@ -16,8 +16,7 @@
             <thead>
               <tr>
                 <th>Name</th>
-                <th>Start</th>
-                <th>End</th>
+                <th>Deadline</th>
                 <th>Assigned to</th>
               </tr>
             </thead>
@@ -25,8 +24,7 @@
               <% for task in @tasks %>
                 <tr>
                   <td><%= link_to task.parsed_name, task_path(@project.slug, task.id) %></td>
-                  <td><%= l task.start_date, format: :short %></td>
-                  <td><%= l task.end_date, format: :short %></td>
+                  <td><%= l task.deadline, format: :short %></td>
                   <td>
                     <% if task.assigned_id == current_user.id %>
                       <div class="text-bold">

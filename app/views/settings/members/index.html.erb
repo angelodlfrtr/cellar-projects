@@ -1,0 +1,94 @@
+<%= render partial: 'partials/project_menu' %>
+
+<div class="container">
+  <div class="columns">
+    <div class="column col-3">
+      <%= render partial: 'partials/settings_menu' %>
+    </div>
+
+    <div class="column col-9">
+      <div class="card">
+        <div class="card-header">
+          <h4 class="card-title">Members</h4>
+          <h5 class="card-subtitle">Select & manage project members</h5>
+        </div>
+
+        <div class="card-body">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>User</th>
+                <th>Role</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @members.each do |member| %>
+                <tr id="member_<%= member.id %>">
+                  <td>
+                    <%= link_to user_path(member.username) do %>
+                      <%= member.username %>
+                    <% end %>
+                    -
+                    <%= member.full_name %>
+                    <% if member.id == current_user.id %>
+                      <span class="text-bold">(vous)</span>
+                    <% end %>
+                  </td>
+                  <td>
+                    <% role = member.roles.find_by!(project_id: @project.id) %>
+                    <%= Project.parse_role(role.level).capitalize %>
+                  </td>
+                  <td>
+                    <%= link_to remove_member_path(@project.slug, member.id),
+                      method: :delete,
+                      data: { confirm: 'Do yout really remove this user from project ?' },
+                      disabled: current_user.id == member.id,
+                      class: 'btn btn-default btn-sm' do %>
+                      <i class="fa fa-trash-o"></i>
+                    <% end %>
+                  </td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+
+          <%= form_tag add_member_path(@project.slug), method: :post do |f| %>
+
+            <table class="table">
+              <tr>
+                <td>
+                  <div class="form-group">
+                    <%= select_tag 'user_id',
+                      options_for_select(
+                        User.where.not(id: @project.users.map(&:id)).map { |u|
+                          ["#{u.username} - #{u.full_name}", u.id]
+                        }
+                      ), class: 'form-select' %>
+                  </div>
+                </td>
+                <td>
+                  <div class="form-group">
+                    <%= select_tag 'level',
+                      options_for_select([
+                        ['Owner', 0],
+                        ['Admin', 1],
+                        ['Worker', 2],
+                        ['Reader', 3]
+                    ], 2), class: 'form-select' %>
+                  </div>
+                </td>
+                <td>
+                  <div class="form-group">
+                    <%= submit_tag 'add', class: 'btn btn-primary btn-block' %>
+                  </div>
+                </td>
+              </tr>
+            </table>
+
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

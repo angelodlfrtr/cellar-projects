@@ -1,0 +1,9 @@
+<ul class="menu">
+  <li class="menu-item">
+    <% _class = params[:controller] == 'settings/members' ? 'active': '' %>
+
+    <%= link_to settings_members_path(@project.slug), class: _class do %>
+      Members
+    <% end %>
+  </li>
+</ul>

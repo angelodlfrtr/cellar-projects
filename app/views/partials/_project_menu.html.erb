@@ -31,11 +31,17 @@
             Documents
           </a>
         </li>
-        <li class="tab-item">
-          <a href="#">
-            <i class="fa fa-cogs"></i>
-            Settings
-          </a>
+
+        <% if @settings_controller %>
+          <li class="tab-item active">
+        <% else %>
+          <li class="tab-item">
+        <% end %>
+
+        <%= link_to settings_members_path(@project.slug) do %>
+          <i class="fa fa-cogs"></i>
+          Settings
+        <% end %>
         </li>
       </ul>
     </div>

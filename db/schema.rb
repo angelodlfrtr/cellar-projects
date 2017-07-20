@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170720082522) do
+ActiveRecord::Schema.define(version: 20170720150926) do
 
   create_table "internal_events", force: :cascade do |t|
     t.string "subject"
@@ -68,8 +68,7 @@ ActiveRecord::Schema.define(version: 20170720082522) do
     t.string "description"
     t.boolean "closed", default: false
     t.boolean "deleted", default: false
-    t.datetime "start_date"
-    t.datetime "end_date"
+    t.datetime "deadline"
     t.integer "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
