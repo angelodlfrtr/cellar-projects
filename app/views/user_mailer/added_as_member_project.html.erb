@@ -1,0 +1,16 @@
+Yo <%= @user.first_name %>,
+
+<br>
+<br>
+
+You have been added as project member in <%= link_to @project.name, project_url(@project.slug) %>
+with <b><%= Project.parse_role(@role.level) %></b>  role.
+
+<br>
+<br>
+
+Keep calm and <%= link_to 'show tasks', tasks_url(@project.slug) %>.
+
+<br>
+<br>
+++

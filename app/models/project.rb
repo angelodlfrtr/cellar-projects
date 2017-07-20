@@ -59,6 +59,20 @@ class Project < ApplicationRecord
     })
   end
 
+  # ===============================
+  # Internal events generation ====
+  # ===============================
+
+  def generate_add_member_internal_event adder_id, role_id
+    InternalEvent.create({
+      subject:    :project_member_added,
+      klass:      :role,
+      user_id:    adder_id,
+      subject_id: role_id,
+      project_id: self.id
+    })
+  end
+
   def generate_creation_internal_event!
     InternalEvent.create({
       subject:    :project_creation,
