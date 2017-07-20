@@ -1,0 +1,64 @@
+<%= render partial: 'partials/project_menu' %>
+
+<div class="container">
+  <div class="columns">
+    <div class="column col-2 col-xl-3">
+      <div class="card">
+        <div class="card-header">
+          <h4 class="card-title">Créer une nouvelle tâche</h4>
+        </div>
+
+        <div class="card-body">
+          Créez une nouvelle tâche en entrant les informations demandées.
+          <br>
+          <%= link_to 'Retour à la liste des tâches', tasks_path(@project.slug) %>
+        </div>
+      </div>
+    </div>
+
+    <div class="column col-7 col-xl-9">
+      <div class="card">
+        <div class="card-body">
+          <%= form_for(@task, url: create_task_path(@project.slug)) do |f| %>
+
+            <div class="form-group">
+              <%= f.label :name, 'Titre de la tâche', class: 'form-label' %>
+              <%= f.text_field :name, class: 'form-input', autofocus: true %>
+            </div>
+
+            <div class="form-group">
+              <%= f.label :description, 'Décrivez la tâche', class: 'form-label' %>
+              <%= f.text_area :description, class: 'form-input', rows: 5 %>
+            </div>
+
+            <div class="form-group">
+              <%= f.label :assigned_id, 'Assignée à', class: 'form-label' %>
+              <%= f.select :assigned_id,
+                options_for_select(@project.users.map{ |c| [c.email, c.id] }),
+                {}, class: 'form-select'
+              %>
+            </div>
+
+            <div class="columns">
+              <div class="column col-6">
+                <%= f.label :start_date, 'Début de la tâche', class: 'form-label' %>
+                <%= f.datetime_select :start_date, class: 'form-input' %>
+              </div>
+
+              <div class="column col-6">
+                <%= f.label :end_date, 'Fin de la tâche', class: 'form-label' %>
+                <%= f.datetime_select :end_date, class: 'form-input' %>
+              </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <div class="form-group">
+              <%= f.submit 'Enregistrer la tâche', class: 'btn btn-primary' %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

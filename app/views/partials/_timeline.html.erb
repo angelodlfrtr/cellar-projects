@@ -1,0 +1,21 @@
+<div class="timeline">
+  <% for event in events %>
+    <div class="timeline-item">
+      <div class="timeline-left icon-lg">
+        <a class="timeline-icon"></a>
+      </div>
+      <div class="timeline-content">
+        <div class="tile">
+          <div class="tile-content">
+            <p class="tile-subtitle">
+              <%= l event.created_at, format: :short %>
+              -
+              <%= link_to event.project.name, project_path(event.project.slug) %>
+            </p>
+            <p class="tile-title"><%= event.desc %></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>

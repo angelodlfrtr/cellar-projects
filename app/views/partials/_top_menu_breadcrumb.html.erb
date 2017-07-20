@@ -1,0 +1,47 @@
+<ul class="breadcrumb">
+
+  <% if params[:controller] == 'dashboard' && params[:action] == 'index' %>
+    <li class="breadcrumb-item">
+      <%= link_to 'Dashboard', root_path %>
+    </li>
+  <% end %>
+
+  <% if params[:controller] == 'projects' && params[:action] == 'show' %>
+    <li class="breadcrumb-item">
+      <%= link_to @project.name, project_path(@project.slug) %>
+    </li>
+  <% end %>
+
+  <% if params[:controller] == 'tasks' && params[:action] == 'index' %>
+    <li class="breadcrumb-item">
+      <%= link_to @project.name, project_path(@project.slug) %>
+    </li>
+    <li class="breadcrumb-item">
+      <%= link_to 'Tâches', tasks_path(@project.slug) %>
+    </li>
+  <% end %>
+
+  <% if params[:controller] == 'tasks' && params[:action] == 'show' %>
+    <li class="breadcrumb-item">
+      <%= link_to @project.name, project_path(@project.slug) %>
+    </li>
+    <li class="breadcrumb-item">
+      <%= link_to 'Tâches', tasks_path(@project.slug) %>
+    </li>
+    <li class="breadcrumb-item">
+      <%= link_to @task.name, task_path(@project.slug, @task.id) %>
+    </li>
+  <% end %>
+
+  <% if params[:controller] == 'tasks' && params[:action] == 'new' %>
+    <li class="breadcrumb-item">
+      <%= link_to @project.name, project_path(@project.slug) %>
+    </li>
+    <li class="breadcrumb-item">
+      <%= link_to 'Tâches', tasks_path(@project.slug) %>
+    </li>
+    <li class="breadcrumb-item">
+      <%= link_to 'Ajouter une tâche', new_task_path(@project.slug) %>
+    </li>
+  <% end %>
+</ul>

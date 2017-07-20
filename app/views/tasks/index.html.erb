@@ -1,0 +1,67 @@
+<%= render partial: 'partials/project_menu' %>
+
+<div class="container">
+  <div class="columns">
+    <div class="column col-9">
+      <div class="card">
+        <div class="card-header">
+          <%= link_to new_task_path(@project.slug), class: 'btn btn-default' do %>
+            <i class="fa fa-plus"></i>
+            Créer une nouvelle tâche
+          <% end %>
+        </div>
+
+        <div class="card-body">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Titre</th>
+                <th>Début</th>
+                <th>Fin</th>
+                <th>Assignée à</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <% for task in @tasks %>
+                <tr>
+                  <td><%= link_to task.name, task_path(@project.slug, task.id) %></td>
+                  <td><%= l task.start_date, format: :short %></td>
+                  <td><%= l task.end_date, format: :short %></td>
+                  <td><%= task.assigned.email %></td>
+                  <td>
+                    <div class="btn-group btn-group-block">
+                      <button class="btn btn-sm">Voir</button>
+                      <button class="btn btn-sm">Edit.</button>
+                      <button class="btn btn-sm">Suppr.</button>
+                    </div>
+                  </td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div class="column col-3">
+      <ul class="menu">
+        <li class="divider" data-content="Filtres"></li>
+        <li class="menu-item">
+          <a href="#">
+            <i class="icon icon-link"></i> Assignées à moi
+          </a>
+        </li>
+        <li class="menu-item">
+          <a href="#">
+            <i class="icon icon-link"></i> Ouvertes
+          </a>
+        </li>
+        <li class="menu-item">
+          <a href="#">
+            <i class="icon icon-link"></i> Fermées
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>

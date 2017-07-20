@@ -1,0 +1,7 @@
+{
+  "name": "cellarRails",
+  "private": true,
+  "dependencies": {
+    "spectre.css": "^0.2.14"
+  }
+}

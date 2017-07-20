@@ -1,0 +1,38 @@
+<%= render partial: 'partials/project_menu' %>
+
+<div class="container">
+  <div class="columns">
+    <div class="column col-6 col-xs-6 col-md-12">
+      <div class="card">
+        <div class="card-header">
+          <h4 class="card-title">Timeline</h4>
+          <div class="card-subtitle"><%= @project.name %></div>
+        </div>
+        <div class="card-body">
+          <%= render partial: 'partials/timeline', locals: { events: @internal_events } %>
+        </div>
+      </div>
+    </div>
+
+    <div class="column col-6 col-xl-6 col-md-12">
+      <div class="card">
+        <div class="card-header">
+          <h4 class="card-title">Vos tâches</h4>
+          <div class="card-subtitle"><%= @project.name %></div>
+        </div>
+        <div class="card-body">
+          <table class="table">
+            <tbody>
+              <% for task in @project.tasks.where(assigned_id: current_user.id).opened %>
+                <tr>
+                  <td><%= link_to task.name, task_path(@project.slug, task.id) %></td>
+                  <td><%= l task.end_date %></td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

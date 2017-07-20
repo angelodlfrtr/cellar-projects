@@ -1,0 +1,15 @@
+defaults: &defaults
+  port: 3000
+  host: localhost
+
+  emails:
+    default_sender: 'noreply@cellar.io'
+
+development:
+  <<: *defaults
+
+test:
+  <<: *defaults
+
+production:
+  <<: *defaults

@@ -1,0 +1,82 @@
+<%= render partial: 'partials/project_menu' %>
+
+<div class="container">
+  <div class="columns">
+    <div class="column col-9">
+      <div class="card">
+        <div class="card-header">
+          <div class="btn-group float-right">
+            <% if @task.closed %>
+              <%= link_to "Ré-ouvrir",
+                reopen_task_path(@project.slug, @task.id),
+                method: :post, class: 'btn btn-primary' %>
+            <% else %>
+              <%= link_to "Fermer",
+                close_task_path(@project.slug, @task.id),
+                method: :post, class: 'btn btn-primary' %>
+            <% end %>
+
+            <%= link_to "Edit.",
+              edit_task_path(@project.slug, @task.id), class: 'btn btn-default' %>
+
+            <%= link_to "Supp.",
+              delete_task_path(@project.slug, @task.id),
+              method: :delete,
+              data: { confirm: "Voulez-vous vraiment supprimer cette tâche ?" },
+              class: 'btn btn-default' %>
+          </div>
+
+          <h2 class="card-title text-bold">
+            <% if @task.closed %>
+              [FERMÉE]
+            <% end %>
+            <%= @task.name %>
+          </h2>
+          <h2 class="card-subtitle">
+            Ouverte le <%= l @task.created_at, format: :long %>
+            par <%= @task.user.email %>
+          </h2>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="card-body">
+          <%= @task.description %>
+        </div>
+      </div>
+
+      <%= render partial: 'comments' %>
+    </div>
+
+    <div class="column col-3">
+      <div class="card">
+        <div class="card-body">
+          <div class="tile">
+            <div class="tile-content">
+              <p class="tile-title text-bold">Assignée à</p>
+              <p class="tile-title"><%= @task.assigned.email %></p>
+            </div>
+          </div>
+
+          <div class="divider"></div>
+
+          <div class="tile">
+            <div class="tile-content">
+              <p class="tile-title text-bold">Début</p>
+              <p class="tile-title"><%= l @task.start_date, format: :long %></p>
+            </div>
+          </div>
+
+          <div class="divider"></div>
+
+          <div class="tile">
+            <div class="tile-content">
+              <p class="tile-title text-bold">Deadline</p>
+              <p class="tile-title"><%= l @task.end_date, format: :long %></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
