@@ -48,7 +48,7 @@ class InternalEvent < ApplicationRecord
         ActionController::Base.helpers.link_to(self.project.name, project_link)
       ].join(' ').html_safe
     when 'task_creation'
-      task      = Task.find(self.subject_id)
+      task      = Task.unscoped.find(self.subject_id)
       task_link = Rails.application.routes.url_helpers.task_url(self.project.slug, task.id)
       user_link = Rails.application.routes.url_helpers.user_url(self.user.username)
 
@@ -64,7 +64,7 @@ class InternalEvent < ApplicationRecord
 
       r.join(' ').html_safe
     when 'task_close'
-      task      = Task.find(self.subject_id)
+      task      = Task.unscoped.find(self.subject_id)
       task_link = Rails.application.routes.url_helpers.task_url(self.project.slug, task.id)
       user_link = Rails.application.routes.url_helpers.user_url(self.user.username)
 
@@ -81,7 +81,7 @@ class InternalEvent < ApplicationRecord
 
       r.join(' ').html_safe
     when 'task_reopen'
-      task      = Task.find(self.subject_id)
+      task      = Task.unscoped.find(self.subject_id)
       task_link = Rails.application.routes.url_helpers.task_url(self.project.slug, task.id)
       user_link = Rails.application.routes.url_helpers.user_url(self.user.username)
 
@@ -98,7 +98,7 @@ class InternalEvent < ApplicationRecord
 
       r.join(' ').html_safe
     when 'task_deletion'
-      task      = Task.find(self.subject_id)
+      task      = Task.unscoped.find(self.subject_id)
       task_link = Rails.application.routes.url_helpers.task_url(self.project.slug, task.id)
       user_link = Rails.application.routes.url_helpers.user_url(self.user.username)
 

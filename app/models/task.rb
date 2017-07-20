@@ -36,6 +36,19 @@ class Task < ApplicationRecord
   # Instance methods =========================================================================================
   # ==========================================================================================================
 
+  def parsed_name
+    if self.closed
+      "[CLOSED] #{self.name}"
+    else
+      self.name
+    end
+  end
+
+  def parsed_desc
+    markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML, autolink: true, tables: true)
+    markdown.render(self.description)
+  end
+
   def get_comments_with_events
     task_comments = self.task_comments.to_a
     events        = self.internal_events.where.not(subject: 'task_comment_creation').to_a

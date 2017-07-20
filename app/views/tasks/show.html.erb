@@ -16,32 +16,32 @@
                 method: :post, class: 'btn btn-primary' %>
             <% end %>
 
-            <%= link_to "Edit.",
-              edit_task_path(@project.slug, @task.id), class: 'btn btn-default' %>
+            <%= link_to edit_task_path(@project.slug, @task.id), class: 'btn btn-default' do %>
+              <i class="fa fa-edit"></i>
+            <% end %>
 
-            <%= link_to "Destroy",
-              delete_task_path(@project.slug, @task.id),
+            <%= link_to destroy_task_path(@project.slug, @task.id),
               method: :delete,
               data: { confirm: "Do you really want to destroy this task ?" },
-              class: 'btn btn-default' %>
+              class: 'btn btn-default' do %>
+              <i class="fa fa-trash-o"></i>
+            <% end %>
           </div>
 
           <h2 class="card-title text-bold">
-            <% if @task.closed %>
-              [CLOSED]
-            <% end %>
-            <%= @task.name %>
+            <%= @task.parsed_name %>
           </h2>
-          <h2 class="card-subtitle">
+
+          <h3 class="card-subtitle">
             Opened at <%= l @task.created_at, format: :long %>
             by <%= @task.user.email %>
-          </h2>
+          </h3>
         </div>
 
         <div class="divider"></div>
 
         <div class="card-body">
-          <%= @task.description %>
+          <%= @task.parsed_desc.html_safe %>
         </div>
       </div>
 
