@@ -24,14 +24,24 @@
             <tbody>
               <% for task in @tasks %>
                 <tr>
-                  <td><%= link_to task.name, task_path(@project.slug, task.id) %></td>
+                  <td><%= link_to task.parsed_name, task_path(@project.slug, task.id) %></td>
                   <td><%= l task.start_date, format: :short %></td>
                   <td><%= l task.end_date, format: :short %></td>
-                  <td><%= link_to task.assigned.username, user_path(task.assigned.username) %></td>
+                  <td>
+                    <% if task.assigned_id == current_user.id %>
+                      <div class="text-bold">
+                        <%= link_to "#{task.assigned.username} (me)", user_path(task.assigned.username) %>
+                      </div>
+                    <% else %>
+                      <%= link_to task.assigned.username, user_path(task.assigned.username) %>
+                    <% end %>
+                  </td>
                 </tr>
               <% end %>
             </tbody>
           </table>
+
+          <%= paginate @tasks %>
         </div>
       </div>
     </div>
@@ -39,19 +49,46 @@
       <ul class="menu">
         <li class="divider" data-content="Filters"></li>
         <li class="menu-item">
-          <a href="#">
-            <i class="icon icon-link"></i> Assigned to me
-          </a>
+          <div class="form-group">
+
+            <% if params[:only_me] == '1' %>
+              <%= link_to params.merge(only_me: nil).permit! do %>
+                <label class="form-checkbox">
+                  <input type="checkbox" checked />
+                  <i class="form-icon"></i> Assigned to me
+                </label>
+              <% end %>
+            <% else %>
+              <%= link_to params.merge(only_me: 1).permit! do %>
+                <label class="form-checkbox">
+                  <input type="checkbox" />
+                  <i class="form-icon"></i> Assigned to me
+                </label>
+              <% end %>
+            <% end %>
+
+          </div>
         </li>
+
         <li class="menu-item">
-          <a href="#">
-            <i class="icon icon-link"></i> Opened
-          </a>
-        </li>
-        <li class="menu-item">
-          <a href="#">
-            <i class="icon icon-link"></i> Closed
-          </a>
+          <div class="form-group">
+
+            <% if params[:closed] == '1' %>
+              <%= link_to params.merge(closed: nil).permit! do %>
+                <label class="form-checkbox">
+                  <input type="checkbox" checked />
+                  <i class="form-icon"></i> Closed
+                </label>
+              <% end %>
+            <% else %>
+              <%= link_to params.merge(closed: 1).permit! do %>
+                <label class="form-checkbox">
+                  <input type="checkbox" />
+                  <i class="form-icon"></i> Closed
+                </label>
+              <% end %>
+            <% end %>
+          </div>
         </li>
       </ul>
     </div>

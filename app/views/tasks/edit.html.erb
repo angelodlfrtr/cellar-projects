@@ -1,0 +1,63 @@
+<%= render partial: 'partials/project_menu' %>
+
+<div class="container">
+  <div class="columns">
+    <div class="column col-2 col-xl-3">
+      <div class="card">
+        <div class="card-header">
+          <h4 class="card-title">Edit task</h4>
+        </div>
+
+        <div class="card-body">
+          Edit an existing task
+          <br>
+          <%= link_to 'Back to task', task_path(@project.slug, @task.id) %>
+        </div>
+      </div>
+    </div>
+
+    <div class="column col-7 col-xl-9">
+      <div class="card">
+        <div class="card-body">
+          <%= form_for(@task, url: update_task_path(@project.slug, @task.id)) do |f| %>
+
+            <div class="form-group">
+              <%= f.label :name, class: 'form-label' %>
+              <%= f.text_field :name, class: 'form-input', autofocus: true %>
+            </div> 
+            <div class="form-group">
+              <%= f.label :description, 'Describe task', class: 'form-label' %>
+              <%= f.text_area :description, class: 'form-input', rows: 5 %>
+            </div>
+
+            <div class="form-group">
+              <%= f.label :assigned_id, 'Assigned to', class: 'form-label' %>
+              <%= f.select :assigned_id,
+                options_for_select(@project.users.map{ |c| [c.username, c.id] }),
+                {}, class: 'form-select'
+              %>
+            </div>
+
+            <div class="columns">
+              <div class="column col-6">
+                <%= f.label :start_date, 'Start', class: 'form-label' %>
+                <%= f.datetime_select :start_date, class: 'form-input' %>
+              </div>
+
+              <div class="column col-6">
+                <%= f.label :end_date, 'Deadline', class: 'form-label' %>
+                <%= f.datetime_select :end_date, class: 'form-input' %>
+              </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <div class="form-group">
+              <%= f.submit 'Update task', class: 'btn btn-primary' %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

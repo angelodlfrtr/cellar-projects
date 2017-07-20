@@ -56,3 +56,6 @@ gem 'settingslogic', '~> 2.0', '>= 2.0.9'
 
 # Pagination
 gem 'kaminari', '~> 1.0', '>= 1.0.1'
+
+# Markdown parser
+gem 'redcarpet', '~> 3.4'

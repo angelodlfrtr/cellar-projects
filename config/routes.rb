@@ -44,6 +44,10 @@ Rails.application.routes.draw do
     to: 'tasks#create',
     as: :create_task
 
+  patch 'projects/:slug/tasks/:id',
+    to: 'tasks#update',
+    as: :update_task
+
   get 'projects/:slug/tasks/:id',
     to: 'tasks#show',
     as: :task
@@ -61,8 +65,8 @@ Rails.application.routes.draw do
     as: :reopen_task
 
   delete 'projects/:slug/tasks/:id',
-    to: 'tasks#delete',
-    as: :delete_task
+    to: 'tasks#destroy',
+    as: :destroy_task
 
   # ==========================================================================================================
   # Task comments ============================================================================================
