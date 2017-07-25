@@ -30,13 +30,13 @@ class Project < ApplicationRecord
   class << self
 
     def parse_role a, force_int=false
-      if a.class == Integer
+      if a.kind_of?(Integer)
         if force_int
           a
         else
           [:owner, :admin, :worker, :reader][a]
         end
-      elsif a.class == Symbol
+      elsif a.kind_of?(Symbol)
         {
           owner: 0,
           admin: 1,
