@@ -6,4 +6,12 @@
       Members
     <% end %>
   </li>
+
+  <li class="menu-item">
+    <% _class = params[:controller] == 'settings/task_labels' ? 'active': '' %>
+
+    <%= link_to settings_task_labels_path(@project.slug), class: _class do %>
+      Task labels
+    <% end %>
+  </li>
 </ul>

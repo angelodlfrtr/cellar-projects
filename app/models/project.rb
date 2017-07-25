@@ -7,6 +7,7 @@ class Project < ApplicationRecord
   has_many :roles
   has_many :users, through: :roles
   has_many :tasks, dependent: :destroy
+  has_many :task_labels, dependent: :destroy
   has_many :internal_events, dependent: :destroy
 
   # ==========================================================================================================

@@ -88,6 +88,7 @@ Rails.application.routes.draw do
   # Settings =================================================================================================
   # ==========================================================================================================
 
+  # Members
   get 'projects/:slug/settings/members',
     to: 'settings/members#index',
     as: :settings_members
@@ -99,4 +100,17 @@ Rails.application.routes.draw do
   delete 'projects/:slug/settings/members/:id',
     to: 'settings/members#remove',
     as: :remove_member
+
+  # Task labels
+  get 'projects/:slug/settings/task_labels',
+    to: 'settings/task_labels#index',
+    as: :settings_task_labels
+
+  post 'projects/:slug/settings/task_labels',
+    to: 'settings/task_labels#create',
+    as: :create_task_label
+
+  delete 'projects/:slug/settings/task_labels/:id',
+    to: 'settings/task_labels#destroy',
+    as: :remove_task_label
 end
