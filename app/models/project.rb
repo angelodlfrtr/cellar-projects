@@ -52,11 +52,21 @@ class Project < ApplicationRecord
   # ==========================================================================================================
 
   def join_user user, as=:worker
-    Role.create({
-      level:      self.class.parse_role(as, true),
-      project_id: self.id,
-      user_id:    user.id
-    })
+    # Try to find previous role, who was deleted before
+    if role = Role.unscoped.where(user_id: user.id, project_id: self.id).first
+      role.update!({
+        deleted: false,
+        level:   self.class.parse_role(as, true)
+      })
+
+      role
+    else
+      Role.create({
+        level:      self.class.parse_role(as, true),
+        project_id: self.id,
+        user_id:    user.id
+      })
+    end
   end
 
   # ===============================
@@ -66,6 +76,16 @@ class Project < ApplicationRecord
   def generate_add_member_internal_event adder_id, role_id
     InternalEvent.create({
       subject:    :project_member_added,
+      klass:      :role,
+      user_id:    adder_id,
+      subject_id: role_id,
+      project_id: self.id
+    })
+  end
+
+  def generate_remove_member_internal_event adder_id, role_id
+    InternalEvent.create({
+      subject:    :project_member_removed,
       klass:      :role,
       user_id:    adder_id,
       subject_id: role_id,

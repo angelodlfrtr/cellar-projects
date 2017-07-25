@@ -16,7 +16,9 @@ class Settings::MembersController < SettingsController
   def remove
     role = @project.roles.find_by!(user_id: params[:id])
 
-    role.destroy
+    role.update!(deleted: true)
+    @project.generate_remove_member_internal_event(current_user.id, role.id)
+
     redirect_to settings_members_path(@project.slug)
   end
 

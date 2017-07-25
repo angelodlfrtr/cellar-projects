@@ -50,7 +50,7 @@ class InternalEvent < ApplicationRecord
     when 'project_member_added'
       project_link = Rails.application.routes.url_helpers.project_url(self.project.slug)
       user_link    = Rails.application.routes.url_helpers.user_url(self.user.username)
-      role         = Role.find(self.subject_id)
+      role         = Role.unscoped.find(self.subject_id)
       member_link  = Rails.application.routes.url_helpers.user_url(role.user.username)
 
       [
@@ -58,6 +58,19 @@ class InternalEvent < ApplicationRecord
         'added member',
         ActionController::Base.helpers.link_to(role.user.username, member_link),
         "as <b>#{Project.parse_role(role.level)}</b> in",
+        ActionController::Base.helpers.link_to(self.project.name, project_link)
+      ].join(' ').html_safe
+    when 'project_member_removed'
+      project_link = Rails.application.routes.url_helpers.project_url(self.project.slug)
+      user_link    = Rails.application.routes.url_helpers.user_url(self.user.username)
+      role         = Role.unscoped.find(self.subject_id)
+      member_link  = Rails.application.routes.url_helpers.user_url(role.user.username)
+
+      [
+        ActionController::Base.helpers.link_to(self.user.username, user_link),
+        'removed member',
+        ActionController::Base.helpers.link_to(role.user.username, member_link),
+        'from',
         ActionController::Base.helpers.link_to(self.project.name, project_link)
       ].join(' ').html_safe
     when 'task_creation'
