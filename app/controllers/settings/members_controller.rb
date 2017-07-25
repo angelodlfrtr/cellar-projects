@@ -13,6 +13,13 @@ class Settings::MembersController < SettingsController
     redirect_to settings_members_path(@project.slug) + "/#member_#{role.user_id}"
   end
 
+  def remove
+    role = @project.roles.find_by!(user_id: params[:id])
+
+    role.destroy
+    redirect_to settings_members_path(@project.slug)
+  end
+
   private
 
     def add_member_params
