@@ -39,7 +39,6 @@
               <% for task in @project.tasks.where(assigned_id: current_user.id).opened %>
                 <tr>
                   <td><%= link_to task.name, task_path(@project.slug, task.id) %></td>
-                  <td><%= l task.deadline %></td>
                 </tr>
               <% end %>
             </tbody>

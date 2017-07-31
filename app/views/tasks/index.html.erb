@@ -16,7 +16,7 @@
             <thead>
               <tr>
                 <th>Name</th>
-                <th>Deadline</th>
+                <th>Milestone</th>
                 <th>Assigned to</th>
               </tr>
             </thead>
@@ -24,7 +24,22 @@
               <% for task in @tasks %>
                 <tr>
                   <td><%= link_to task.parsed_name, task_path(@project.slug, task.id) %></td>
-                  <td><%= l task.deadline, format: :short %></td>
+                  <td>
+                    <% if task.milestone %>
+                      <%
+                        nparams              = params.dup.permit!.to_h
+                        nparams[:milestones] = [task.milestone.id]
+                      %>
+
+                      <%= link_to nparams do %>
+                        <%= task.milestone.name %>
+                      <% end %>
+                      --
+                      <%= l task.milestone.deadline, format: :short %>
+                    <% else %>
+                      None
+                    <% end %>
+                  </td>
                   <td>
                     <% if task.assigned_id == current_user.id %>
                       <div class="text-bold">
@@ -70,7 +85,6 @@
 
         <li class="menu-item">
           <div class="form-group">
-
             <% if params[:closed] == '1' %>
               <%= link_to params.merge(closed: nil).permit! do %>
                 <label class="form-checkbox">
@@ -88,6 +102,40 @@
             <% end %>
           </div>
         </li>
+
+        <li class="divider" data-content="Milestones"></li>
+
+        <% @project.milestones.each do |milestone| %>
+
+          <li class="menu-item">
+            <div class="form-group">
+              <% if params[:milestones] && params[:milestones].kind_of?(Array) && params[:milestones].include?(milestone.id.to_s) %>
+                <%
+                  nparams = params.dup.permit!.to_h
+                  nparams[:milestones].delete(milestone.id.to_s)
+                %>
+                <%= link_to nparams do %>
+                  <label class="form-checkbox">
+                    <input type="checkbox" checked />
+                    <i class="form-icon"></i> <%= milestone.name %>
+                  </label>
+                <% end %>
+              <% else %>
+                <%
+                  nparams              = params.dup.permit!.to_h
+                  nparams[:milestones] = nparams[:milestones] || []
+                  nparams[:milestones] << milestone.id
+                %>
+                <%= link_to nparams do %>
+                  <label class="form-checkbox">
+                    <input type="checkbox" />
+                    <i class="form-icon"></i> <%= milestone.name %>
+                  </label>
+                <% end %>
+              <% end %>
+            </div>
+          </li>
+        <% end %>
       </ul>
     </div>
   </div>

@@ -9,6 +9,7 @@ class Project < ApplicationRecord
   has_many :tasks, dependent: :destroy
   has_many :task_labels, dependent: :destroy
   has_many :internal_events, dependent: :destroy
+  has_many :milestones, dependent: :destroy
 
   # ==========================================================================================================
   # Validations ==============================================================================================

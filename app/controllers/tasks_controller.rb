@@ -16,6 +16,18 @@ class TasksController < ApplicationController
       @tasks = @tasks.opened
     end
 
+    milestone_ids = []
+
+    if params[:milestones]
+      if params[:milestones].kind_of?(Array)
+        params[:milestones].each { |m| milestone_ids.push(m.to_i).delete_if { |n| n == 0 } }
+      end
+    end
+
+    if milestone_ids.length > 0
+      @tasks = @tasks.where(milestone_id: milestone_ids)
+    end
+
     @tasks = @tasks.order(updated_at: :desc).page(page)
   end
 
@@ -79,7 +91,7 @@ class TasksController < ApplicationController
   private
 
     def task_params
-      params.require(:task).permit(:name, :description, :deadline, :assigned_id)
+      params.require(:task).permit(:name, :description, :assigned_id, :milestone_id)
     end
 
     def find_project

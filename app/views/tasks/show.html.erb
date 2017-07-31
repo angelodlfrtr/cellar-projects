@@ -62,8 +62,14 @@
 
           <div class="tile">
             <div class="tile-content">
-              <p class="tile-title text-bold">Deadline</p>
-              <p class="tile-title"><%= l @task.deadline, format: :long %></p>
+              <p class="tile-title text-bold">Milestone</p>
+              <p class="tile-title">
+              <% if @task.milestone %>
+                <%= l @task.milestone.deadline, format: :long %>
+              <% else %>
+                None
+              <% end %>
+              </p>
             </div>
           </div>
         </div>

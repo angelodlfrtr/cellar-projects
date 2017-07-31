@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170725160145) do
+ActiveRecord::Schema.define(version: 20170731105220) do
 
   create_table "internal_events", force: :cascade do |t|
     t.string "subject"
@@ -31,6 +31,15 @@ ActiveRecord::Schema.define(version: 20170725160145) do
     t.integer "user_id", null: false
     t.index ["internal_event_id", "user_id"], name: "index_internal_events_users_on_internal_event_id_and_user_id", unique: true
     t.index ["user_id", "internal_event_id"], name: "index_internal_events_users_on_user_id_and_internal_event_id", unique: true
+  end
+
+  create_table "milestones", force: :cascade do |t|
+    t.string "name"
+    t.datetime "deadline"
+    t.integer "project_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["project_id"], name: "index_milestones_on_project_id"
   end
 
   create_table "projects", force: :cascade do |t|
@@ -78,12 +87,13 @@ ActiveRecord::Schema.define(version: 20170725160145) do
     t.string "description"
     t.boolean "closed", default: false
     t.boolean "deleted", default: false
-    t.datetime "deadline"
     t.integer "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "assigned_id"
+    t.integer "milestone_id"
     t.index ["assigned_id"], name: "index_tasks_on_assigned_id"
+    t.index ["milestone_id"], name: "index_tasks_on_milestone_id"
     t.index ["project_id"], name: "index_tasks_on_project_id"
     t.index ["user_id"], name: "index_tasks_on_user_id"
   end

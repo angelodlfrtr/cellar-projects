@@ -1,0 +1,41 @@
+<%= render partial: 'partials/project_menu' %>
+
+<div class="container">
+  <div class="columns">
+    <div class="column col-12">
+      <div class="card">
+        <div class="card-header">
+          <%= link_to new_milestone_path(@project.slug), class: 'btn btn-default' do %>
+            <i class="fa fa-plus"></i>
+            Add milestone
+          <% end %>
+        </div>
+
+        <div class="card-body">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Deadline</th>
+                <th># tasks</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @milestones.each do |milestone| %>
+                <tr>
+                  <td><%= milestone.name %></td>
+                  <td><%= l milestone.deadline, format: :default %></td>
+                  <td><%= milestone.tasks.count %></td>
+                  <td></td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+
+          <%= paginate @milestones %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -38,11 +38,12 @@
               %>
             </div>
 
-            <div class="columns">
-              <div class="column col-6">
-                <%= f.label :deadline, class: 'form-label' %>
-                <%= f.datetime_select :deadline, class: 'form-input' %>
-              </div>
+            <div class="form-group">
+              <%= f.label :milestone_id, 'Milestone', class: 'form-label' %>
+              <%= f.select :milestone_id,
+                options_for_select(@project.milestones.map{ |c| [c.name, c.id] }),
+                {}, class: 'form-select'
+              %>
             </div>
 
             <div class="divider"></div>

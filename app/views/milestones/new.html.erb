@@ -1,0 +1,46 @@
+<%= render partial: 'partials/project_menu' %>
+
+<div class="container">
+  <div class="columns">
+    <div class="column col-2 col-xl-3">
+      <div class="card">
+        <div class="card-header">
+          <h4 class="card-title">New milestone</h4>
+        </div>
+
+        <div class="card-body">
+          Create new milestone
+          <br>
+          <%= link_to 'Back to milestones', milestones_path(@project.slug) %>
+        </div>
+      </div>
+    </div>
+
+    <div class="column col-7 col-xl-9">
+      <div class="card">
+        <div class="card-body">
+          <%= form_for(@milestone, url: create_milestone_path(@project.slug)) do |f| %>
+
+            <div class="form-group">
+              <%= f.label :name, class: 'form-label' %>
+              <%= f.text_field :name, class: 'form-input', autofocus: true %>
+            </div>
+
+            <div class="columns">
+              <div class="column col-6">
+                <%= f.label :deadline, class: 'form-label' %>
+                <%= f.datetime_select :deadline, class: 'form-input' %>
+              </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <div class="form-group">
+              <%= f.submit 'Create milestone', class: 'btn btn-primary' %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
