@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170731105220) do
+ActiveRecord::Schema.define(version: 20170802104913) do
 
   create_table "internal_events", force: :cascade do |t|
     t.string "subject"
@@ -79,6 +79,13 @@ ActiveRecord::Schema.define(version: 20170731105220) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["project_id"], name: "index_task_labels_on_project_id"
+  end
+
+  create_table "task_labels_tasks", id: false, force: :cascade do |t|
+    t.integer "task_id", null: false
+    t.integer "task_label_id", null: false
+    t.index ["task_id", "task_label_id"], name: "index_task_labels_tasks_on_task_id_and_task_label_id"
+    t.index ["task_label_id", "task_id"], name: "index_task_labels_tasks_on_task_label_id_and_task_id"
   end
 
   create_table "tasks", force: :cascade do |t|

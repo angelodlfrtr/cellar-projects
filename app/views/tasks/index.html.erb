@@ -17,6 +17,7 @@
               <tr>
                 <th>Name</th>
                 <th>Milestone</th>
+                <th>Labels</th>
                 <th>Assigned to</th>
               </tr>
             </thead>
@@ -41,6 +42,11 @@
                     <% end %>
                   </td>
                   <td>
+                    <% task.task_labels.each do |label| %>
+                      <%= task_label label.name, label.color_code %>
+                    <% end %>
+                  </td>
+                  <td>
                     <% if task.assigned_id == current_user.id %>
                       <div class="text-bold">
                         <%= link_to "#{task.assigned.username} (me)", user_path(task.assigned.username) %>
@@ -58,9 +64,34 @@
         </div>
       </div>
     </div>
+
     <div class="column col-3">
       <ul class="menu">
+
         <li class="divider" data-content="Filters"></li>
+
+        <li class="menu-item">
+          <div class="form-group">
+            <% if params[:closed] == '1' %>
+              <%= link_to params.merge(closed: nil).permit! do %>
+                <label class="form-checkbox">
+                  <input type="checkbox" checked />
+                  <i class="form-icon"></i> Closed
+                </label>
+              <% end %>
+            <% else %>
+              <%= link_to params.merge(closed: 1).permit! do %>
+                <label class="form-checkbox">
+                  <input type="checkbox" />
+                  <i class="form-icon"></i> Closed
+                </label>
+              <% end %>
+            <% end %>
+          </div>
+        </li>
+
+        <li class="divider" data-content="Assignee"></li>
+
         <li class="menu-item">
           <div class="form-group">
 
@@ -83,25 +114,40 @@
           </div>
         </li>
 
-        <li class="menu-item">
-          <div class="form-group">
-            <% if params[:closed] == '1' %>
-              <%= link_to params.merge(closed: nil).permit! do %>
-                <label class="form-checkbox">
-                  <input type="checkbox" checked />
-                  <i class="form-icon"></i> Closed
-                </label>
+
+        <li class="divider" data-content="Labels"></li>
+
+        <% @project.task_labels.each do |label| %>
+
+          <li class="menu-item">
+            <div class="form-group">
+              <% if params[:labels] && params[:labels].kind_of?(Array) && params[:labels].include?(label.id.to_s) %>
+                <%
+                  nparams = params.dup.permit!.to_h
+                  nparams[:labels].delete(label.id.to_s)
+                %>
+                <%= link_to nparams do %>
+                  <label class="form-checkbox">
+                    <input type="checkbox" checked />
+                    <i class="form-icon"></i> <%= task_label label.name, label.color_code %>
+                  </label>
+                <% end %>
+              <% else %>
+                <%
+                  nparams          = params.dup.permit!.to_h
+                  nparams[:labels] = nparams[:labels] || []
+                  nparams[:labels] << label.id
+                %>
+                <%= link_to nparams do %>
+                  <label class="form-checkbox">
+                    <input type="checkbox" />
+                    <i class="form-icon"></i> <%= task_label label.name, label.color_code %>
+                  </label>
+                <% end %>
               <% end %>
-            <% else %>
-              <%= link_to params.merge(closed: 1).permit! do %>
-                <label class="form-checkbox">
-                  <input type="checkbox" />
-                  <i class="form-icon"></i> Closed
-                </label>
-              <% end %>
-            <% end %>
-          </div>
-        </li>
+            </div>
+          </li>
+        <% end %>
 
         <li class="divider" data-content="Milestones"></li>
 

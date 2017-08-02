@@ -9,6 +9,7 @@ class Task < ApplicationRecord
   belongs_to :milestone, optional: true
   belongs_to :assigned, foreign_key: :assigned_id, class_name: :User
   has_many :task_comments, dependent: :destroy
+  has_and_belongs_to_many :task_labels
 
   # ==========================================================================================================
   # Validations ==============================================================================================

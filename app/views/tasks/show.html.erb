@@ -72,6 +72,19 @@
               </p>
             </div>
           </div>
+
+          <div class="divider"></div>
+
+          <div class="tile">
+            <div class="tile-content">
+              <p class="tile-title text-bold">Labels</p>
+              <p class="tile-title">
+                <% @task.task_labels.each do |label| %>
+                  <%= task_label label.name, label.color_code %>
+                <% end %>
+              </p>
+            </div>
+          </div>
         </div>
       </div>
     </div>

@@ -22,3 +22,7 @@ Things you may want to cover:
 * Deployment instructions
 
 * ...
+
+## Features
+
+- Add a `deadline` field to tasks, if task.milestone ? due_date = task.milestone.deadline : due_date = task.deadline
