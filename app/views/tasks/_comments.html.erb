@@ -24,9 +24,7 @@
               </span>
             </p>
 
-            <p>
-              <%= comment.content %>
-            </p>
+            <%= comment.parsed_content.html_safe %>
           </div>
         </div>
       <% end %>

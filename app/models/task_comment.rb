@@ -25,6 +25,10 @@ class TaskComment < ApplicationRecord
   # Instance methods =========================================================================================
   # ==========================================================================================================
 
+  def parsed_content
+    GitHub::Markup.render_s(GitHub::Markups::MARKUP_MARKDOWN, self.content)
+  end
+
   private
 
     def generate_creation_internal_event

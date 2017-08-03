@@ -47,8 +47,7 @@ class Task < ApplicationRecord
   end
 
   def parsed_desc
-    markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML, autolink: true, tables: true)
-    markdown.render(self.description)
+    GitHub::Markup.render_s(GitHub::Markups::MARKUP_MARKDOWN, self.description)
   end
 
   def get_comments_with_events
