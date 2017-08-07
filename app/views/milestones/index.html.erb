@@ -17,6 +17,7 @@
               <tr>
                 <th>Name</th>
                 <th>Deadline</th>
+                <th>Progress</th>
                 <th># tasks</th>
                 <th></th>
               </tr>
@@ -26,7 +27,15 @@
                 <tr>
                   <td><%= milestone.name %></td>
                   <td><%= l milestone.deadline, format: :default %></td>
-                  <td><%= milestone.tasks.count %></td>
+                  <td>
+                    <% if milestone.tasks.count > 0 %>
+                      <% w = milestone.tasks.closed.count * 100 / milestone.tasks.count %>
+                      <div class="bar">
+                        <div class="bar-item tooltip" style="width: <%= w %>%;"><%= w %>%</div>
+                      </div>
+                    <% end %>
+                  </td>
+                  <td><%= milestone.tasks.closed.count %> / <%= milestone.tasks.count %></td>
                   <td></td>
                 </tr>
               <% end %>
