@@ -55,6 +55,20 @@
                       <%= link_to task.assigned.username, user_path(task.assigned.username) %>
                     <% end %>
                   </td>
+
+                  <td>
+                    <div class="btn-group btn-group-block">
+                      <% if task.closed? %>
+                        <%= link_to "Re-open",
+                          reopen_task_path(@project.slug, task.id),
+                          method: :post, class: 'btn btn-primary btn-sm' %>
+                      <% else %>
+                        <%= link_to "Close",
+                          close_task_path(@project.slug, task.id),
+                          method: :post, class: 'btn btn-primary btn-sm' %>
+                      <% end %>
+                    </div>
+                  </td>
                 </tr>
               <% end %>
             </tbody>
