@@ -8,7 +8,9 @@ class DocumentsController < ApplicationController
     @documents = @project.documents
 
     # Uploaded by me
-    @documents = @documents.where(user_id: current_user.id)
+    if params[:by_me] && params[:by_me] == '1'
+      @documents = @documents.where(user_id: current_user.id)
+    end
 
     # Filter by labels
     label_ids = []
