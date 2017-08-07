@@ -6,16 +6,19 @@ class TasksController < ApplicationController
     page   = parse_page(params[:page])
     @tasks = @project.tasks
 
+    # Show `assigned to me`
     if params[:only_me] == '1'
       @tasks = @tasks.where(assigned_id: current_user.id)
     end
 
+    # Show closed
     if params[:closed] == '1'
       @tasks = @tasks.closed
     else
       @tasks = @tasks.opened
     end
 
+    # Filter milestones
     milestone_ids = []
 
     if params[:milestones]
@@ -28,6 +31,20 @@ class TasksController < ApplicationController
       @tasks = @tasks.where(milestone_id: milestone_ids)
     end
 
+    # Filter labels
+    label_ids = []
+
+    if params[:labels]
+      if params[:labels].kind_of?(Array)
+        params[:labels].each { |m| label_ids.push(m.to_i).delete_if { |n| n == 0 } }
+      end
+    end
+
+    if label_ids.length > 0
+      @tasks = @tasks.joins(:task_labels).where('task_labels.id' => label_ids)
+    end
+
+    # Paginate
     @tasks = @tasks.order(updated_at: :desc).page(page)
   end
 
