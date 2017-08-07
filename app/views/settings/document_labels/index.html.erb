@@ -1,0 +1,88 @@
+<%= render partial: 'partials/project_menu' %>
+
+<div class="container">
+  <div class="columns">
+    <div class="column col-3">
+      <%= render partial: 'partials/settings_menu' %>
+    </div>
+
+    <div class="column col-9">
+      <div class="card">
+        <div class="card-header">
+          <h4 class="card-title">Document labels</h4>
+          <h5 class="card-subtitle">Manage project document labels</h5>
+        </div>
+
+        <div class="card-body">
+          <% if @project.document_labels.count > 0 %>
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Color</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                <% @labels.each do |label| %>
+                  <tr>
+                    <td>
+                      <%= label.name %>
+                    </td>
+                    <td>
+                      <%= task_label label.name, label.color_code %>
+                    </td>
+                    <td>
+                      <%= link_to remove_document_label_path(@project.slug, label.id),
+                        method: :delete,
+                        data: { confirm: 'Do yout really remove this document label from project ?' },
+                        class: 'btn btn-default btn-sm' do %>
+                        <i class="fa fa-trash-o"></i>
+                      <% end %>
+                    </td>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
+          <% end %>
+
+          <br>
+          <br>
+          <div class="divider"></div>
+
+          <h5>Add a new document label</h5>
+
+          <%= form_for @label,
+            url: create_document_label_path(@project.slug),
+            method: :post,
+            html: { class: 'form-horizontal' } do |f| %>
+
+            <div class="form-group">
+              <div class="col-3">
+                <%= f.label :name, 'Label name', class: 'form-label' %>
+              </div>
+              <div class="col-9">
+                <%= f.text_field :name, class: 'form-input' %>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <div class="col-3">
+                <%= f.label :name, 'Label color', class: 'form-label' %>
+              </div>
+              <div class="col-9">
+                <%= f.color_field :color_code, class: 'form-input' %>
+              </div>
+            </div>
+
+            <div class="form-group float-right">
+              <%= f.submit 'Create', class: 'btn btn-primary' %>
+            </div>
+
+            <br>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

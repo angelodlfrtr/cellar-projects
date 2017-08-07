@@ -110,8 +110,4 @@ class TasksController < ApplicationController
     def task_params
       params.require(:task).permit(:name, :description, :assigned_id, :milestone_id, task_label_ids: [])
     end
-
-    def find_project
-      @project = Project.find_by(slug: params[:slug])
-    end
 end

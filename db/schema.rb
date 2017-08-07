@@ -10,7 +10,44 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170802104913) do
+ActiveRecord::Schema.define(version: 20170807121642) do
+
+  create_table "document_labels", force: :cascade do |t|
+    t.string "name"
+    t.string "color_code"
+    t.integer "project_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["project_id"], name: "index_document_labels_on_project_id"
+  end
+
+  create_table "document_labels_documents", id: false, force: :cascade do |t|
+    t.integer "document_label_id", null: false
+    t.integer "document_id", null: false
+    t.index ["document_id", "document_label_id"], name: "index_doc_labels_docs_on_doc_id_and_doc_label_id"
+    t.index ["document_label_id", "document_id"], name: "index_doc_labels_docts_on_doc_label_id_and_doc_id"
+  end
+
+  create_table "documents", force: :cascade do |t|
+    t.integer "project_id"
+    t.integer "user_id"
+    t.string "metadata"
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["project_id"], name: "index_documents_on_project_id"
+    t.index ["user_id"], name: "index_documents_on_user_id"
+  end
+
+  create_table "file_uploads", force: :cascade do |t|
+    t.string "file"
+    t.string "metadata"
+    t.string "klass"
+    t.integer "klass_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["klass_id"], name: "index_file_uploads_on_klass_id"
+  end
 
   create_table "internal_events", force: :cascade do |t|
     t.string "subject"

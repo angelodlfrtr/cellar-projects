@@ -18,10 +18,6 @@ class TaskCommentsController < ApplicationController
       params.require(:task_comment).permit(:content)
     end
 
-    def find_project
-      @project = Project.find_by!(slug: params[:slug])
-    end
-
     def find_task
       @task = @project.tasks.find(params[:id])
     end

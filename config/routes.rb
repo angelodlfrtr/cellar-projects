@@ -93,6 +93,26 @@ Rails.application.routes.draw do
     as: :create_task_comment
 
   # ==========================================================================================================
+  # Documents ================================================================================================
+  # ==========================================================================================================
+
+  get 'projects/:slug/documents',
+    to: 'documents#index',
+    as: :documents
+
+  get 'projects/:slug/documents/new',
+    to: 'documents#new',
+    as: :new_document
+
+  post 'projects/:slug/documents',
+    to: 'documents#create',
+    as: :create_document
+
+  delete 'projects/:slug/documents/:id',
+    to: 'documents#destroy',
+    as: :destroy_document
+
+  # ==========================================================================================================
   # Users ====================================================================================================
   # ==========================================================================================================
 
@@ -129,4 +149,18 @@ Rails.application.routes.draw do
   delete 'projects/:slug/settings/task_labels/:id',
     to: 'settings/task_labels#destroy',
     as: :remove_task_label
+
+
+  # Document labels
+  get 'projects/:slug/settings/document_labels',
+    to: 'settings/document_labels#index',
+    as: :settings_document_labels
+
+  post 'projects/:slug/settings/document_labels',
+    to: 'settings/document_labels#create',
+    as: :create_document_label
+
+  delete 'projects/:slug/settings/document_labels/:id',
+    to: 'settings/document_labels#destroy',
+    as: :remove_document_label
 end

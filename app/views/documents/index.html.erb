@@ -1,0 +1,125 @@
+<%= render partial: 'partials/project_menu' %>
+
+<div class="container">
+  <div class="columns">
+    <div class="column col-9">
+      <div class="card">
+        <div class="card-header">
+          <%= link_to new_document_path(@project.slug), class: 'btn btn-default' do %>
+            <i class="fa fa-plus"></i>
+            Upload new document
+          <% end %>
+        </div>
+
+        <div class="card-body">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Uploaded a</th>
+                <th>Labels</th>
+                <th>Creator</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <% for document in @documents %>
+                <tr>
+                  <td><%= link_to document.name, document.file_upload.file.url, target: :_blank %></td>
+                  <td><%= l document.created_at, format: :short %></td>
+                  <td>
+                    <% document.document_labels.each do |label| %>
+                      <%= task_label label.name, label.color_code %>
+                    <% end %>
+                  </td>
+                  <td><%= link_to document.user.username, user_path(document.user.username) %></td>
+                  <td>
+                    <div class="btn-group btn-group-block">
+                      <%= link_to document.file_upload.file.url,
+                        class: 'btn btn-primary btn-sm',
+                        target: :_blank do %>
+                        <i class="fa fa-download"></i>
+                      <% end %>
+                      <%= link_to destroy_document_path(@project.slug, document.id),
+                        data: { confirm: 'Do yout really want to destroy this task ?' },
+                        method: :delete,
+                        class: 'btn btn-default btn-sm' do %>
+                        <i class="fa fa-trash-o"></i>
+                      <% end %>
+                    </div>
+                  </td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+
+          <%= paginate @documents %>
+        </div>
+      </div>
+    </div>
+
+    <div class="column col-3">
+      <ul class="menu">
+
+        <li class="divider" data-content="Assignee"></li>
+
+        <li class="menu-item">
+          <div class="form-group">
+
+            <% if params[:by_me] == '1' %>
+              <%= link_to params.merge(by_me: nil).permit! do %>
+                <label class="form-checkbox">
+                  <input type="checkbox" checked />
+                  <i class="form-icon"></i> Uploaded by me
+                </label>
+              <% end %>
+            <% else %>
+              <%= link_to params.merge(by_me: 1).permit! do %>
+                <label class="form-checkbox">
+                  <input type="checkbox" />
+                  <i class="form-icon"></i> Uploaded by me
+                </label>
+              <% end %>
+            <% end %>
+
+          </div>
+        </li>
+
+
+        <li class="divider" data-content="Labels"></li>
+
+        <% @project.document_labels.each do |label| %>
+
+          <li class="menu-item">
+            <div class="form-group">
+              <% if params[:labels] && params[:labels].kind_of?(Array) && params[:labels].include?(label.id.to_s) %>
+                <%
+                  nparams = params.dup.permit!.to_h
+                  nparams[:labels].delete(label.id.to_s)
+                %>
+                <%= link_to nparams do %>
+                  <label class="form-checkbox">
+                    <input type="checkbox" checked />
+                    <i class="form-icon"></i> <%= task_label label.name, label.color_code %>
+                  </label>
+                <% end %>
+              <% else %>
+                <%
+                  nparams          = params.dup.permit!.to_h
+                  nparams[:labels] = nparams[:labels] || []
+                  nparams[:labels] << label.id
+                %>
+                <%= link_to nparams do %>
+                  <label class="form-checkbox">
+                    <input type="checkbox" />
+                    <i class="form-icon"></i> <%= task_label label.name, label.color_code %>
+                  </label>
+                <% end %>
+              <% end %>
+            </div>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+  </div>
+</div>

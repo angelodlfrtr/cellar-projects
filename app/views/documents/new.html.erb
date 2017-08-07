@@ -1,0 +1,54 @@
+<%= render partial: 'partials/project_menu' %>
+
+<div class="container">
+  <div class="columns">
+    <div class="column col-2 col-xl-3">
+      <div class="card">
+        <div class="card-header">
+          <h4 class="card-title">New document</h4>
+        </div>
+
+        <div class="card-body">
+          Create & upload a new document
+          <br>
+          <%= link_to 'Back to documents', documents_path(@project.slug) %>
+        </div>
+      </div>
+    </div>
+
+    <div class="column col-7 col-xl-9">
+      <div class="card">
+        <div class="card-body">
+          <%= form_for(@document, url: create_document_path(@project.slug)) do |f| %>
+
+            <div class="form-group">
+              <%= f.label :name, class: 'form-label' %>
+              <%= f.text_field :name, class: 'form-input', autofocus: true %>
+            </div>
+
+            <div class="form-group">
+              <%= f.label :document_label_ids, 'Labels', class: 'form-label' %>
+              <%= f.select :document_label_ids,
+                options_for_select(@project.document_labels.map{ |c| [c.name, c.id] }),
+                {}, class: 'form-select', multiple: true
+              %>
+            </div>
+
+            <div class="columns">
+              <div class="column col-6">
+                <%= f.label :file, class: 'form-label' %>
+                <%= f.file_field :file, class: 'form-input' %>
+              </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <div class="form-group">
+              <%= f.submit 'Upload document', class: 'btn btn-primary' %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

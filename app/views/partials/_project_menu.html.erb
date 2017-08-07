@@ -36,11 +36,15 @@
           <% end %>
         </li>
 
-        <li class="tab-item">
-          <a href="#">
+        <% if params[:controller] == 'documents' %>
+          <li class="tab-item active">
+        <% else %>
+          <li class="tab-item">
+        <% end %>
+          <%= link_to documents_path(@project.slug) do %>
             <i class="fa fa-file"></i>
             Documents
-          </a>
+          <% end %>
         </li>
 
         <% if @settings_controller %>

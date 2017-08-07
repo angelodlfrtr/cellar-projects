@@ -60,3 +60,6 @@ gem 'kaminari', '~> 1.0', '>= 1.0.1'
 # Markdown parser
 gem 'commonmarker', '~> 0.16.8'
 gem 'github-markup', '~> 1.6', '>= 1.6.1'
+
+# File uploads
+gem 'carrierwave', '~> 1.1'

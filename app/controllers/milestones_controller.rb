@@ -29,8 +29,4 @@ class MilestonesController < ApplicationController
     def milestone_params
       params.require(:milestone).permit(:name, :deadline)
     end
-
-    def find_project
-      @project = Project.find_by!(slug: params[:slug])
-    end
 end

@@ -14,4 +14,12 @@
       Task labels
     <% end %>
   </li>
+
+  <li class="menu-item">
+    <% _class = params[:controller] == 'settings/document_labels' ? 'active': '' %>
+
+    <%= link_to settings_document_labels_path(@project.slug), class: _class do %>
+      Document labels
+    <% end %>
+  </li>
 </ul>
