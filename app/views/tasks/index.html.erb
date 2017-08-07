@@ -19,6 +19,7 @@
                 <th>Milestone</th>
                 <th>Labels</th>
                 <th>Assigned to</th>
+                <th></th>
               </tr>
             </thead>
             <tbody>
@@ -58,14 +59,21 @@
 
                   <td>
                     <div class="btn-group btn-group-block">
+                      <%= link_to 'Show',
+                        task_path(@project.slug, task.id),
+                        class: 'btn btn-default btn-sm' %>
                       <% if task.closed? %>
                         <%= link_to "Re-open",
                           reopen_task_path(@project.slug, task.id),
-                          method: :post, class: 'btn btn-primary btn-sm' %>
+                          method: :post, class: 'btn btn-default btn-sm' %>
                       <% else %>
                         <%= link_to "Close",
                           close_task_path(@project.slug, task.id),
-                          method: :post, class: 'btn btn-primary btn-sm' %>
+                          method: :post, class: 'btn btn-default btn-sm' %>
+                      <% end %>
+                      <%= link_to edit_task_path(@project.slug, task.id),
+                        class: 'btn btn-default btn-sm' do %>
+                        <i class="fa fa-edit"></i>
                       <% end %>
                     </div>
                   </td>
