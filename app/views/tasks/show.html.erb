@@ -34,7 +34,7 @@
 
           <h3 class="card-subtitle">
             Opened at <%= l @task.created_at, format: :long %>
-            by <%= @task.user.email %>
+            by <%= link_to @task.user.username, user_path(@task.user.username) %>
           </h3>
         </div>
 
@@ -54,7 +54,9 @@
           <div class="tile">
             <div class="tile-content">
               <p class="tile-title text-bold">Assigned to</p>
-              <p class="tile-title"><%= @task.assigned.email %></p>
+              <p class="tile-title">
+                <%= link_to @task.assigned.username, user_path(@task.assigned.username) %>
+              </p>
             </div>
           </div>
 
