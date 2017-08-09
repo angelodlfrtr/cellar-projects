@@ -12,6 +12,14 @@
   <div class="right">
     <ul>
       <li>
+        <%= link_to todos_path,
+          title: 'Todos',
+          class: 'badge',
+          'data-badge' => current_user.todos.where(done: false).count do %>
+          <i class="fa fa-tasks"></i>
+        <% end %>
+      </li>
+      <li>
         <a href="#"><%= current_user.username %></a>
       </li>
       <li>

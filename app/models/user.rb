@@ -11,10 +11,11 @@ class User < ApplicationRecord
   # ==========================================================================================================
 
   has_many :roles
-  has_many :projects, through: :roles
+  has_many :todos,         dependent: :destroy
+  has_many :projects,      through: :roles
   has_many :created_tasks, class_name: :Task, foreign_key: :user_id
-  has_many :tasks, foreign_key: :assigned_id
-  has_and_belongs_to_many :internal_events, -> { order(created_at: :desc) }
+  has_many :tasks,         foreign_key: :assigned_id
+  has_and_belongs_to_many  :internal_events, -> { order(created_at: :desc) }
 
   # ==========================================================================================================
   # Validations ==============================================================================================

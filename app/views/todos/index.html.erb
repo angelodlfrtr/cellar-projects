@@ -1,0 +1,93 @@
+<div class="container">
+  <div class="columns">
+    <div class="column col-6">
+      <div class="card">
+        <div class="card-body">
+
+          <h6>Create todo</h6>
+
+          <%= form_for @todo, url: create_todo_path do |f| %>
+
+            <div class="form-group">
+              <%= f.label :title, class: 'form-label' %>
+              <%= f.text_field :title, class: 'form-input', autofocus: true %>
+            </div>
+
+            <div class="form-group">
+              <%= f.label :content, 'Describe task', class: 'form-label' %>
+              <%= f.text_area :content, class: 'form-input', rows: 3 %>
+              <small>Markdown accepted</small>
+            </div>
+
+            <div class="form-group">
+              <%= f.submit 'Create todo', class: 'btn btn-primary btn-sm' %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+
+      <br>
+
+      <div class="card">
+        <div class="card-body">
+
+          <h6>My todos</h6>
+
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Deadline</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @todos.each do |todo| %>
+                <tr>
+                  <td> <%= link_to todo.title, todo_path(todo.id) %> </td>
+                  <td> <%= l todo.deadline, format: :short %> </td>
+                  <td>
+                    <div class="btn-group btn-group-block">
+                      <% unless todo.done %>
+                      <%= link_to "Done",
+                        done_todo_path(todo.id),
+                        method: :post, class: 'btn btn-sm btn-primary' %>
+                    <% end %>
+                    </div>
+                  </td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="column col-3">
+      <ul class="menu">
+
+        <li class="divider" data-content="Filters"></li>
+
+        <li class="menu-item">
+          <div class="form-group">
+            <% if params[:done] == '1' %>
+              <%= link_to params.merge(done: nil).permit! do %>
+                <label class="form-checkbox">
+                  <input type="checkbox" checked />
+                  <i class="form-icon"></i> Done
+                </label>
+              <% end %>
+            <% else %>
+              <%= link_to params.merge(done: 1).permit! do %>
+                <label class="form-checkbox">
+                  <input type="checkbox" />
+                  <i class="form-icon"></i> Done
+                </label>
+              <% end %>
+            <% end %>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>

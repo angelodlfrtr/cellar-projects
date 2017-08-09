@@ -1,0 +1,30 @@
+<div class="container">
+  <div class="columns">
+    <div class="column col-6">
+      <div class="card">
+        <div class="card-header">
+          <h3 class="card-title"> <%= @todo.title %> </h3>
+        </div>
+        <div class="card-body">
+
+          <div class="btn-group">
+            <%= link_to "Back to todos", todos_path, class: 'btn btn-default' %>
+            <% unless @todo.done %>
+              <%= link_to "Done",
+                done_todo_path(@todo.id),
+                method: :post, class: 'btn btn-primary' %>
+            <% end %>
+          </div>
+
+          <div class="divider"></div>
+
+          <% if @todo.content && @todo.content.length > 0 %>
+            <%= @todo.parsed_content.html_safe %>
+          <% else %>
+            <i>No description</i>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

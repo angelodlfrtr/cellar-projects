@@ -50,4 +50,19 @@
       <%= link_to 'Ajouter une tâche', new_task_path(@project.slug) %>
     </li>
   <% end %>
+
+  <% if params[:controller] == 'todos' && params[:action] == 'index' %>
+    <li class="breadcrumb-item">
+      <%= link_to 'Todos', todos_path %>
+    </li>
+  <% end %>
+
+  <% if params[:controller] == 'todos' && params[:action] == 'show' %>
+    <li class="breadcrumb-item">
+      <%= link_to 'Todos', todos_path %>
+    </li>
+    <li class="breadcrumb-item">
+      <%= link_to @todo.title, todo_path(@todo.id) %>
+    </li>
+  <% end %>
 </ul>
